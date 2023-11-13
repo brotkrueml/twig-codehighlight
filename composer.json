@@ -1,0 +1,43 @@
+{
+	"name": "brotkrueml/code-highlight-twig-extension",
+	"description": "Twig extension for code highlighting using highlight.php",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"twig",
+		"syntax highlighter"
+	],
+	"authors": [
+		{
+			"name": "Chris Müller",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">= 8.1",
+		"scrivo/highlight.php": "^9.18",
+		"twig/twig": "^3.7"
+	},
+	"require-dev": {
+		"brotkrueml/coding-standards": "~5.0.0",
+		"ergebnis/composer-normalize": "~2.39.0",
+		"phpstan/phpstan": "1.10.41",
+		"phpunit/phpunit": "^10.4",
+		"rector/rector": "0.18.7"
+	},
+	"autoload": {
+		"psr-4": {
+			"Brotkrueml\\CodeHighlightTwigExtension\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Brotkrueml\\CodeHighlightTwigExtension\\Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"ergebnis/composer-normalize": true
+		},
+		"sort-packages": true
+	}
+}
