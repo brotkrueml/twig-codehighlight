@@ -40,10 +40,13 @@ final class CodeHighlight extends AbstractExtension
         ];
     }
 
-    private function highlight(string $code, string $language): string
+    private function highlight(string $code, string $language, bool $showLineNumbers = false, int $startWithLineNumber = 1): string
     {
         try {
             $highlightedCode = $this->highlighter->highlight($language, $code);
+            if ($showLineNumbers) {
+                $highlightedCode->value = $this->appendLineNumbers($highlightedCode->value, $startWithLineNumber);
+            }
 
             return \sprintf(
                 '<pre><code class="hljs %s">%s</code></pre>',
@@ -57,5 +60,20 @@ final class CodeHighlight extends AbstractExtension
                 \htmlentities($code),
             );
         }
+    }
+
+    private function appendLineNumbers(string $code, int $start = 1): string
+    {
+        $lines = \explode("\n", $code);
+        $lineCounter = $start;
+        $newLines = \array_map(static function (string $line) use (&$lineCounter): string {
+            return \sprintf(
+                '<span data-line-number="%d">%s</span>',
+                $lineCounter++,
+                $line,
+            );
+        }, $lines);
+
+        return \implode("\n", $newLines);
     }
 }

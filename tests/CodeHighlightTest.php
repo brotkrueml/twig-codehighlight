@@ -82,7 +82,43 @@ YAML,
 EXPECTED,
         ];
 
-        yield 'with a non-existing language' => [
+        yield 'with line numbers' => [
+            'filterArguments' => '"php", true',
+            'code' => <<<PHP
+\$foo = 1;
+\$bar = 42;
+PHP,
+            'expected' => <<<EXPECTED
+<pre><code class="hljs php"><span data-line-number="1">\$foo = <span class="hljs-number">1</span>;</span>
+<span data-line-number="2">\$bar = <span class="hljs-number">42</span>;</span></code></pre>
+EXPECTED,
+        ];
+
+        yield 'with line numbers and start with line number' => [
+            'filterArguments' => '"php", true, 11',
+            'code' => <<<PHP
+\$foo = 1;
+\$bar = 42;
+PHP,
+            'expected' => <<<EXPECTED
+<pre><code class="hljs php"><span data-line-number="11">\$foo = <span class="hljs-number">1</span>;</span>
+<span data-line-number="12">\$bar = <span class="hljs-number">42</span>;</span></code></pre>
+EXPECTED,
+        ];
+
+        yield 'without line numbers, but start with line number, then no line numbers displayed' => [
+            'filterArguments' => 'language="php", startWithLineNumber=11',
+            'code' => <<<PHP
+\$foo = 1;
+\$bar = 42;
+PHP,
+            'expected' => <<<EXPECTED
+<pre><code class="hljs php">\$foo = <span class="hljs-number">1</span>;
+\$bar = <span class="hljs-number">42</span>;</code></pre>
+EXPECTED,
+        ];
+
+        yield 'with a non-existing language displays raw code block' => [
             'filterArguments' => '"nonexisting"',
             'code' => 'I don\'t "exist" <here>',
             'expected' => '<pre><code>I don&#039;t &quot;exist&quot; &lt;here&gt;</code></pre>',
