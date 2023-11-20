@@ -59,9 +59,14 @@ final class CodeHighlight extends AbstractExtension
             );
         } catch (\DomainException) {
             // This is thrown, if the specified language does not exist
+            $code = \htmlentities($code);
+            if ($showLineNumbers) {
+                $code = $this->appendLineNumbers($code, $startWithLineNumber);
+            }
+
             return \sprintf(
                 '<pre><code>%s</code></pre>',
-                \htmlentities($code),
+                $code,
             );
         }
     }

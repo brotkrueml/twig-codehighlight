@@ -129,5 +129,17 @@ EXPECTED,
             'code' => 'I don\'t "exist" <here>',
             'expected' => '<pre><code>I don&#039;t &quot;exist&quot; &lt;here&gt;</code></pre>',
         ];
+
+        yield 'with a non-existing language with line numbers displays raw code block' => [
+            'filterArguments' => '"nonexisting", true',
+            'code' => 'I don\'t "exist" <here>',
+            'expected' => '<pre><code><span data-line-number="1">I don&#039;t &quot;exist&quot; &lt;here&gt;</span></code></pre>',
+        ];
+
+        yield 'with a non-existing language with line numbers and start with line number displays raw code block' => [
+            'filterArguments' => '"nonexisting", true, 10',
+            'code' => 'I don\'t "exist" <here>',
+            'expected' => '<pre><code><span data-line-number="10">I don&#039;t &quot;exist&quot; &lt;here&gt;</span></code></pre>',
+        ];
     }
 }
