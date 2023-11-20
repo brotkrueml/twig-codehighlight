@@ -40,9 +40,13 @@ final class CodeHighlight extends AbstractExtension
         ];
     }
 
-    private function highlight(string $code, string $language, bool $showLineNumbers = false, int $startWithLineNumber = 1): string
+    private function highlight(string $code, ?string $language, bool $showLineNumbers = false, int $startWithLineNumber = 1): string
     {
         try {
+            if ($language === null) {
+                throw new \DomainException();
+            }
+
             $highlightedCode = $this->highlighter->highlight($language, $code);
             if ($showLineNumbers) {
                 $highlightedCode->value = $this->appendLineNumbers($highlightedCode->value, $startWithLineNumber);

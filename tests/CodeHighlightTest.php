@@ -118,6 +118,12 @@ PHP,
 EXPECTED,
         ];
 
+        yield 'with a null value as language' => [
+            'filterArguments' => 'null',
+            'code' => 'Some code',
+            'expected' => '<pre><code>Some code</code></pre>',
+        ];
+
         yield 'with a non-existing language displays raw code block' => [
             'filterArguments' => '"nonexisting"',
             'code' => 'I don\'t "exist" <here>',
