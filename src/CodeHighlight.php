@@ -40,19 +40,22 @@ final class CodeHighlight extends AbstractExtension
         ];
     }
 
-    private function highlight(string $code, string $languageName): string
+    private function highlight(string $code, string $language): string
     {
         try {
-            $highlightedCode = $this->highlighter->highlight($languageName, $code);
+            $highlightedCode = $this->highlighter->highlight($language, $code);
 
-            return '<pre><code class="hljs ' . $highlightedCode->language . '">'
-                . $highlightedCode->value
-                . '</code></pre>';
+            return \sprintf(
+                '<pre><code class="hljs %s">%s</code></pre>',
+                $highlightedCode->language,
+                $highlightedCode->value,
+            );
         } catch (\DomainException) {
             // This is thrown, if the specified language does not exist
-            return '<pre><code>'
-                . \htmlentities($code)
-                . '</code></pre>';
+            return \sprintf(
+                '<pre><code>%s</code></pre>',
+                \htmlentities($code),
+            );
         }
     }
 }

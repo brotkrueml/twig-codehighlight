@@ -35,10 +35,10 @@ final class CodeHighlightTest extends TestCase
 
     #[Test]
     #[DataProvider('providerForHighlightThroughTwigTemplate')]
-    public function highlightThroughTwigTemplate(string $languageName, string $code, string $expected): void
+    public function highlightThroughTwigTemplate(string $filterArguments, string $code, string $expected): void
     {
         $loader = new ArrayLoader([
-            'index' => '{{ "' . \addcslashes($code, '"') . '" | codehighlight("' . $languageName . '") }}',
+            'index' => '{{ "' . \addcslashes($code, '"') . '" | codehighlight(' . $filterArguments . ') }}',
         ]);
         $twig = new Environment($loader, [
             'debug' => true,
@@ -52,24 +52,24 @@ final class CodeHighlightTest extends TestCase
     }
 
     /**
-     * @return \Iterator<int, array{language: string, code: string, expected: string}>
+     * @return \Iterator<string, array{filterArguments: string, code: string, expected: string}>
      */
     public static function providerForHighlightThroughTwigTemplate(): \Iterator
     {
-        yield [
-            'language' => 'html',
+        yield 'with language=html' => [
+            'filterArguments' => '"html"',
             'code' => '<html lang="en"><head><title>Some HTML</title><body>Some<br>content</body></head>',
             'expected' => '<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Some HTML<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>Some<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>content<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></code></pre>',
         ];
 
-        yield [
-            'language' => 'php',
+        yield 'with language=php' => [
+            'filterArguments' => '"php"',
             'code' => '<?php $var = 1; ?>',
             'expected' => '<pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> $var = <span class="hljs-number">1</span>; <span class="hljs-meta">?&gt;</span></code></pre>',
         ];
 
-        yield [
-            'language' => 'yaml',
+        yield 'with language=yaml as named argument' => [
+            'filterArguments' => 'language="yaml"',
             'code' => <<<YAML
 some:
   configuration:
@@ -82,8 +82,8 @@ YAML,
 EXPECTED,
         ];
 
-        yield [
-            'language' => 'nonexisting',
+        yield 'with a non-existing language' => [
+            'filterArguments' => '"nonexisting"',
             'code' => 'I don\'t "exist" <here>',
             'expected' => '<pre><code>I don&#039;t &quot;exist&quot; &lt;here&gt;</code></pre>',
         ];
