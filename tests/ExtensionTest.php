@@ -154,6 +154,12 @@ PYTHON,
 EXPECTED,
         ];
 
+        yield 'with emphasizeLines is null' => [
+            'filterArguments' => '"php", emphasizeLines=null',
+            'code' => '<?php $var = 1; ?>',
+            'expected' => '<pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> $var = <span class="hljs-number">1</span>; <span class="hljs-meta">?&gt;</span></code></pre>',
+        ];
+
         yield 'with a null value as language' => [
             'filterArguments' => 'null',
             'code' => 'Some code',

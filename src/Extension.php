@@ -53,12 +53,12 @@ final class Extension extends AbstractExtension
         ?string $language,
         bool $showLineNumbers = false,
         int $startWithLineNumber = 1,
-        string $emphasizeLines = '',
+        ?string $emphasizeLines = '',
     ): string {
         $this->language = $language ?? '';
         $this->showLineNumbers = $showLineNumbers;
         $this->startWithLineNumber = $startWithLineNumber;
-        $this->emphasizeLines = $emphasizeLines;
+        $this->emphasizeLines = $emphasizeLines ?? '';
 
         if ($this->language === '') {
             return $this->buildHtmlCode($code);
