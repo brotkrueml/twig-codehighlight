@@ -7,7 +7,7 @@ cs:
 
 .PHONY: infection
 infection:
-	vendor/bin/infection --min-msi=90
+	vendor/bin/infection --min-msi=96
 
 .PHONY: phpstan
 phpstan:

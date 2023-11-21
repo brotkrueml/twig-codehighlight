@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Brotkrueml\TwigCodeHighlight;
 
+use Brotkrueml\TwigCodeHighlight\Parser\LineNumbersParser;
 use Highlight\Highlighter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -21,10 +22,17 @@ use Twig\TwigFilter;
 final class Extension extends AbstractExtension
 {
     private readonly Highlighter $highlighter;
+    private readonly LineNumbersParser $lineNumbersParser;
+
+    private string $language;
+    private bool $showLineNumbers;
+    private int $startWithLineNumber;
+    private string $emphasizeLines;
 
     public function __construct()
     {
         $this->highlighter = new Highlighter();
+        $this->lineNumbersParser = new LineNumbersParser();
     }
 
     public function getFilters(): array
@@ -40,38 +48,55 @@ final class Extension extends AbstractExtension
         ];
     }
 
-    private function highlight(string $code, ?string $language, bool $showLineNumbers = false, int $startWithLineNumber = 1): string
-    {
+    private function highlight(
+        string $code,
+        ?string $language,
+        bool $showLineNumbers = false,
+        int $startWithLineNumber = 1,
+        string $emphasizeLines = '',
+    ): string {
+        $this->language = $language ?? '';
+        $this->showLineNumbers = $showLineNumbers;
+        $this->startWithLineNumber = $startWithLineNumber;
+        $this->emphasizeLines = $emphasizeLines;
+
+        if ($this->language === '') {
+            return $this->buildHtmlCode($code);
+        }
+
         try {
-            if ($language === null) {
-                throw new \DomainException();
-            }
+            $highlightedCode = $this->highlighter->highlight($this->language, $code);
+            $codeClasses = 'hljs ' . $highlightedCode->language;
 
-            $highlightedCode = $this->highlighter->highlight($language, $code);
-            if ($showLineNumbers) {
-                $highlightedCode->value = $this->appendLineNumbers($highlightedCode->value, $startWithLineNumber);
-            }
-
-            return \sprintf(
-                '<pre><code class="hljs %s">%s</code></pre>',
-                $highlightedCode->language,
-                $highlightedCode->value,
-            );
+            return $this->buildHtmlCode($highlightedCode->value, false, $codeClasses);
         } catch (\DomainException) {
             // This is thrown, if the specified language does not exist
-            $code = \htmlentities($code);
-            if ($showLineNumbers) {
-                $code = $this->appendLineNumbers($code, $startWithLineNumber);
-            }
-
-            return \sprintf(
-                '<pre><code>%s</code></pre>',
-                $code,
-            );
+            return $this->buildHtmlCode($code);
         }
     }
 
-    private function appendLineNumbers(string $code, int $start = 1): string
+    private function buildHtmlCode(string $code, bool $encode = true, string $codeClasses = ''): string
+    {
+        if ($encode) {
+            $code = \htmlentities($code);
+        }
+
+        if ($this->showLineNumbers) {
+            $code = $this->addLineNumbers($code, $this->startWithLineNumber);
+        }
+
+        if ($this->emphasizeLines !== '') {
+            $code = $this->addEmphasizeLines($code);
+        }
+
+        return \sprintf(
+            '<pre><code%s>%s</code></pre>',
+            $codeClasses !== '' ? ' class="' . $codeClasses . '"' : '',
+            $code,
+        );
+    }
+
+    private function addLineNumbers(string $code, int $start = 1): string
     {
         $lines = \explode("\n", $code);
         $lineCounter = $start;
@@ -82,6 +107,32 @@ final class Extension extends AbstractExtension
                 $line,
             );
         }, $lines);
+
+        return \implode("\n", $newLines);
+    }
+
+    private function addEmphasizeLines(string $code): string
+    {
+        $parsedEmphasizedLines = $this->lineNumbersParser->parse($this->emphasizeLines);
+        if ($parsedEmphasizedLines === []) {
+            return $code;
+        }
+
+        $lines = \explode("\n", $code);
+        $lineNumber = 1;
+        $newLines = [];
+        foreach ($lines as $line) {
+            if (\in_array($lineNumber, $parsedEmphasizedLines, true)) {
+                $newLines[] = \sprintf(
+                    '<span data-emphasize-line>%s</span>',
+                    $line,
+                );
+            } else {
+                $newLines[] = $line;
+            }
+
+            $lineNumber++;
+        }
 
         return \implode("\n", $newLines);
     }

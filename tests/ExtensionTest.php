@@ -118,6 +118,42 @@ PHP,
 EXPECTED,
         ];
 
+        yield 'with emphasize lines' => [
+            'filterArguments' => '"python", emphasizeLines="3,5"',
+            'code' => <<<PYTHON
+def some_function():
+    interesting = False
+    print('This line is highlighted.')
+    print('This one is not...')
+    print('...but this one is.')
+PYTHON,
+            'expected' => <<<EXPECTED
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_function</span><span class="hljs-params">()</span>:</span>
+    interesting = <span class="hljs-literal">False</span>
+<span data-emphasize-line>    print(<span class="hljs-string">'This line is highlighted.'</span>)</span>
+    print(<span class="hljs-string">'This one is not...'</span>)
+<span data-emphasize-line>    print(<span class="hljs-string">'...but this one is.'</span>)</span></code></pre>
+EXPECTED,
+        ];
+
+        yield 'with emphasize lines and line numbers' => [
+            'filterArguments' => '"python", true, emphasizeLines="3,5"',
+            'code' => <<<PYTHON
+def some_function():
+    interesting = False
+    print('This line is highlighted.')
+    print('This one is not...')
+    print('...but this one is.')
+PYTHON,
+            'expected' => <<<EXPECTED
+<pre><code class="hljs python"><span data-line-number="1"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">some_function</span><span class="hljs-params">()</span>:</span></span>
+<span data-line-number="2">    interesting = <span class="hljs-literal">False</span></span>
+<span data-emphasize-line><span data-line-number="3">    print(<span class="hljs-string">'This line is highlighted.'</span>)</span></span>
+<span data-line-number="4">    print(<span class="hljs-string">'This one is not...'</span>)</span>
+<span data-emphasize-line><span data-line-number="5">    print(<span class="hljs-string">'...but this one is.'</span>)</span></span></code></pre>
+EXPECTED,
+        ];
+
         yield 'with a null value as language' => [
             'filterArguments' => 'null',
             'code' => 'Some code',
