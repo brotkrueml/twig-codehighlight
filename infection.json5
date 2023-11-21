@@ -12,7 +12,7 @@
         "@default": true,
         "CastInt": {
             "ignore": [
-                "Brotkrueml\\TwigCodeHighlight\\Helpers\\NumbersResolver"
+                "Brotkrueml\\TwigCodeHighlight\\Parser\\LineNumbersParser"
             ]
         }
     }

@@ -9,20 +9,20 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Brotkrueml\TwigCodeHighlight\Tests\Helpers;
+namespace Brotkrueml\TwigCodeHighlight\Tests\Parser;
 
-use Brotkrueml\TwigCodeHighlight\Helpers\NumbersResolver;
+use Brotkrueml\TwigCodeHighlight\Parser\LineNumbersParser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-final class NumbersResolverTest extends TestCase
+final class LineNumbersParserTest extends TestCase
 {
-    private NumbersResolver $subject;
+    private LineNumbersParser $subject;
 
     protected function setUp(): void
     {
-        $this->subject = new NumbersResolver();
+        $this->subject = new LineNumbersParser();
     }
 
     /**
@@ -32,7 +32,7 @@ final class NumbersResolverTest extends TestCase
     #[DataProvider('providerForResolve')]
     public function resolve(string $numbers, array $expected): void
     {
-        $actual = $this->subject->resolve($numbers);
+        $actual = $this->subject->parse($numbers);
 
         self::assertSame($expected, $actual);
     }

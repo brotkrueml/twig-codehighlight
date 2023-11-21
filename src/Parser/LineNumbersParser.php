@@ -9,21 +9,21 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Brotkrueml\TwigCodeHighlight\Helpers;
+namespace Brotkrueml\TwigCodeHighlight\Parser;
 
 /**
- * Resolves a string ofnumbers, for example, "1-3,5,8-10,12" to an array
+ * Resolves a string of numbers, for example, "1-3,5,8-10,12" to an array
  * of all numbers, for example, [1,2,3,5,8,9,10,12].
  *
  * @internal
- * @see \Brotkrueml\TwigCodeHighlight\Tests\Helpers\NumbersResolverTest
+ * @see \Brotkrueml\TwigCodeHighlight\Tests\Parser\LineNumbersParserTest
  */
-final class NumbersResolver
+final class LineNumbersParser
 {
     /**
      * @return list<int>
      */
-    public function resolve(string $numbers): array
+    public function parse(string $numbers): array
     {
         if ($numbers === '') {
             return [];
