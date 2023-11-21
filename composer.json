@@ -1,5 +1,5 @@
 {
-	"name": "brotkrueml/code-highlight-twig-extension",
+	"name": "brotkrueml/twig-codehighlight",
 	"description": "Twig extension for code highlighting using highlight.php",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
@@ -26,12 +26,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Brotkrueml\\CodeHighlightTwigExtension\\": "src"
+			"Brotkrueml\\TwigCodeHighlight\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Brotkrueml\\CodeHighlightTwigExtension\\Tests\\": "tests/"
+			"Brotkrueml\\TwigCodeHighlight\\Tests\\": "tests/"
 		}
 	},
 	"config": {

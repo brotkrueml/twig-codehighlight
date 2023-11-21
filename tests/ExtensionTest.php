@@ -3,28 +3,28 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "brotkrueml/code-highlight-twig-extension" package.
+ * This file is part of the "brotkrueml/twig-codehighlight" package.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Brotkrueml\CodeHighlightTwigExtension\Tests;
+namespace Brotkrueml\TwigCodeHighlight\Tests;
 
-use Brotkrueml\CodeHighlightTwigExtension\CodeHighlight;
+use Brotkrueml\TwigCodeHighlight\Extension;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
-final class CodeHighlightTest extends TestCase
+final class ExtensionTest extends TestCase
 {
-    private CodeHighlight $subject;
+    private Extension $subject;
 
     protected function setUp(): void
     {
-        $this->subject = new CodeHighlight();
+        $this->subject = new Extension();
     }
 
     #[Test]

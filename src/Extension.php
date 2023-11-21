@@ -3,22 +3,22 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "brotkrueml/code-highlight-twig-extension" package.
+ * This file is part of the "brotkrueml/twig-codehighlight" package.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Brotkrueml\CodeHighlightTwigExtension;
+namespace Brotkrueml\TwigCodeHighlight;
 
 use Highlight\Highlighter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * @see \Brotkrueml\CodeHighlightTwigExtension\Tests\CodeHighlightTest
+ * @see \Brotkrueml\TwigCodeHighlight\Tests\ExtensionTest
  */
-final class CodeHighlight extends AbstractExtension
+final class Extension extends AbstractExtension
 {
     private readonly Highlighter $highlighter;
 

@@ -6,7 +6,7 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return static function (ECSConfig $config): void {
     $header = <<<HEADER
-This file is part of the "brotkrueml/code-highlight-twig-extension" package.
+This file is part of the "brotkrueml/twig-codehighlight" package.
 
 For the full copyright and license information, please read the
 LICENSE.txt file that was distributed with this source code.

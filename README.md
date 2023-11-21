@@ -13,7 +13,7 @@ which does the hard work.
 Add the extension to the Twig environment:
 
 ```php
-$twig->addExtension(new Brotkrueml\CodeHighlightTwigExtension\CodeHighlight());
+$twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension());
 ```
 
 Use it in Twig templates:
