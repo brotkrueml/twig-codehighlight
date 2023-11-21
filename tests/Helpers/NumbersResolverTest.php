@@ -105,13 +105,13 @@ final class NumbersResolverTest extends TestCase
         ];
 
         yield 'with a wrong number and a letter in the beginning of the range' => [
-            'numbers' => '1a-5',
-            'expected' => [],
+            'numbers' => '1a-5,9',
+            'expected' => [9],
         ];
 
         yield 'with a wrong number and a letter at the end of the range' => [
-            'numbers' => '7-9b',
-            'expected' => [],
+            'numbers' => '7-9b,15',
+            'expected' => [15],
         ];
 
         yield 'with a negative range of numbers' => [

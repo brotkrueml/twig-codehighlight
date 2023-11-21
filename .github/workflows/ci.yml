@@ -78,6 +78,10 @@ jobs:
         if: always()
         run: |
           vendor/bin/ecs check --no-progress-bar
+      - name: Run mutation tests
+        if: always()
+        run: |
+            make infection
       - name: Run phpstan
         if: always()
         run: |

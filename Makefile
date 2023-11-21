@@ -1,9 +1,13 @@
 .PHONY: qa
-qa: cs tests phpstan rector-dry
+qa: cs tests infection phpstan rector-dry
 
 .PHONY: cs
 cs:
 	vendor/bin/ecs --fix
+
+.PHONY: infection
+infection:
+	vendor/bin/infection --min-msi=90
 
 .PHONY: phpstan
 phpstan:

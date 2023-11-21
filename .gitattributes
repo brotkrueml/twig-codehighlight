@@ -4,6 +4,7 @@
 /.github export-ignore
 /.gitignore export-ignore
 /ecs.php export-ignore
+/infection.json5 export-ignore
 /Makefile export-ignore
 /phpstan.neon export-ignore
 /phpunit.xml.dist export-ignore

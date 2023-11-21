@@ -1,0 +1,19 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "logs/infection.txt"
+    },
+    "mutators": {
+        "@default": true,
+        "CastInt": {
+            "ignore": [
+                "Brotkrueml\\TwigCodeHighlight\\Helpers\\NumbersResolver"
+            ]
+        }
+    }
+}
