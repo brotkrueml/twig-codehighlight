@@ -160,6 +160,18 @@ EXPECTED,
             'expected' => '<pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> $var = <span class="hljs-number">1</span>; <span class="hljs-meta">?&gt;</span></code></pre>',
         ];
 
+        yield 'with classes' => [
+            'filterArguments' => '"php", classes="someclass anotherclass"',
+            'code' => '<?php $var = 1; ?>',
+            'expected' => '<pre class="someclass anotherclass"><code class="hljs php"><span class="hljs-meta">&lt;?php</span> $var = <span class="hljs-number">1</span>; <span class="hljs-meta">?&gt;</span></code></pre>',
+        ];
+
+        yield 'with classes with special chars' => [
+            'filterArguments' => '"php", classes="some<class> \"another&class\'"',
+            'code' => '<?php $var = 1; ?>',
+            'expected' => '<pre class="some&lt;class&gt; &quot;another&amp;class&#039;"><code class="hljs php"><span class="hljs-meta">&lt;?php</span> $var = <span class="hljs-number">1</span>; <span class="hljs-meta">?&gt;</span></code></pre>',
+        ];
+
         yield 'with a null value as language' => [
             'filterArguments' => 'null',
             'code' => 'Some code',

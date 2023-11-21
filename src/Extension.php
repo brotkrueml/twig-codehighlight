@@ -28,6 +28,7 @@ final class Extension extends AbstractExtension
     private bool $showLineNumbers;
     private int $startWithLineNumber;
     private string $emphasizeLines;
+    private string $classes;
 
     public function __construct()
     {
@@ -54,11 +55,13 @@ final class Extension extends AbstractExtension
         bool $showLineNumbers = false,
         int $startWithLineNumber = 1,
         ?string $emphasizeLines = '',
+        string $classes = '',
     ): string {
         $this->language = $language ?? '';
         $this->showLineNumbers = $showLineNumbers;
         $this->startWithLineNumber = $startWithLineNumber;
         $this->emphasizeLines = $emphasizeLines ?? '';
+        $this->classes = $classes;
 
         if ($this->language === '') {
             return $this->buildHtmlCode($code);
@@ -90,7 +93,8 @@ final class Extension extends AbstractExtension
         }
 
         return \sprintf(
-            '<pre><code%s>%s</code></pre>',
+            '<pre%s><code%s>%s</code></pre>',
+            $this->classes !== '' ? ' class="' . \htmlentities($this->classes) . '"' : '',
             $codeClasses !== '' ? ' class="' . $codeClasses . '"' : '',
             $code,
         );

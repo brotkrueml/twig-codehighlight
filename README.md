@@ -2,17 +2,19 @@
 
 [![CI Status](https://github.com/brotkrueml/schema/workflows/CI/badge.svg?branch=main)](https://github.com/brotkrueml/schema/actions?query=workflow%3ACI)
 
-This package provides a Twig extension for code highlighting. Under the hood, the
-[scrivo/highlight.php](https://github.com/scrivo/highlight.php) package is used
-which does the hard work.
+This package provides a Twig extension for server-side code highlighting. Under the
+hood, the [scrivo/highlight.php](https://github.com/scrivo/highlight.php) package is
+used which does the hard work. You can use every
+[theme provided for highlight.js](https://github.com/highlightjs/highlight.js/tree/main/src/styles).
 
 An addition to the highlighting of code this Twig extension provides additional
 (opinionated) features:
 
 - [line numbers](#line-numbers)
 - [emphasize lines](#emphasize-lines)
+- [classes](#classes)
 
-> This package is under heavy development!
+> This package is currently under heavy development!
 
 ## Usage
 
@@ -34,6 +36,13 @@ You can also use named arguments, the example above can be also written like:
 ```twig
 {{ "<?php echo 'test'; ?>" | codehighlight(language="php") }}
 ```
+
+This will render something like this:
+
+```html
+<pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-string">"test"</span>; <span class="hljs-meta">?&gt;</span></code></pre>
+```
+
 
 
 ### Line numbers
