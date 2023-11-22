@@ -5,7 +5,7 @@
 This package provides a Twig extension for server-side code highlighting. Under the
 hood, the [scrivo/highlight.php](https://github.com/scrivo/highlight.php) package is
 used which does the hard work. You can use every
-[theme provided for highlight.js](https://github.com/highlightjs/highlight.js/tree/main/src/styles).
+[theme provided for highlight.js](https://highlightjs.org/demo).
 
 An addition to the highlighting of code this Twig extension provides additional
 (opinionated) features:
