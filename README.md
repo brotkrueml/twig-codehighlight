@@ -31,6 +31,14 @@ Use it in Twig templates:
 
 If the language is not available, a raw code block is displayed.
 
+It is also possible to inject a logger that implements `\Psr\Log\LoggerInterface`
+to display warnings when a given language is not available, either via dependency
+injection or manually:
+
+```php
+$twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension($myLogger));
+```
+
 You can also use named arguments, the example above can be also written like:
 
 ```twig

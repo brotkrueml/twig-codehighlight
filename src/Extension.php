@@ -13,6 +13,7 @@ namespace Brotkrueml\TwigCodeHighlight;
 
 use Brotkrueml\TwigCodeHighlight\Parser\LineNumbersParser;
 use Highlight\Highlighter;
+use Psr\Log\LoggerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -30,8 +31,9 @@ final class Extension extends AbstractExtension
     private string $emphasizeLines;
     private string $classes;
 
-    public function __construct()
-    {
+    public function __construct(
+        private readonly ?LoggerInterface $logger = null,
+    ) {
         $this->highlighter = new Highlighter();
         $this->lineNumbersParser = new LineNumbersParser();
     }
@@ -74,6 +76,15 @@ final class Extension extends AbstractExtension
             return $this->buildHtmlCode($highlightedCode->value, false, $codeClasses);
         } catch (\DomainException) {
             // This is thrown, if the specified language does not exist
+            if ($this->logger instanceof LoggerInterface) {
+                $this->logger->warning(
+                    \sprintf(
+                        'Language "%s" is not available to highlight code',
+                        $this->language,
+                    ),
+                );
+            }
+
             return $this->buildHtmlCode($code);
         }
     }

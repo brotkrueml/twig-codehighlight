@@ -15,6 +15,9 @@ use Brotkrueml\TwigCodeHighlight\Extension;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerTrait;
+use Psr\Log\LogLevel;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -195,5 +198,40 @@ EXPECTED,
             'code' => 'I don\'t "exist" <here>',
             'expected' => '<pre><code><span data-line-number="10">I don&#039;t &quot;exist&quot; &lt;here&gt;</span></code></pre>',
         ];
+    }
+
+    #[Test]
+    public function warningIsLoggedIfLanguageIsNotAvailable(): void
+    {
+        $logger = new class() implements LoggerInterface {
+            use LoggerTrait;
+
+            public string $level = '';
+            public \Stringable|string $message = '';
+
+            public function log($level, \Stringable|string $message, array $context = []): void
+            {
+                $this->level = $level;
+                $this->message = $message;
+            }
+        };
+
+        $subject = new Extension($logger);
+
+        $loader = new ArrayLoader([
+            'index' => '{{ "some code" | codehighlight("non_existing") }}',
+        ]);
+        $twig = new Environment($loader, [
+            'debug' => true,
+            'cache' => false,
+        ]);
+        $twig->addExtension($subject);
+
+        $template = $twig->load('index');
+
+        $template->render();
+
+        self::assertSame(LogLevel::WARNING, $logger->level);
+        self::assertSame('Language "non_existing" is not available to highlight code', $logger->message);
     }
 }
