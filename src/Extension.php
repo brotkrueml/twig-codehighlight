@@ -46,12 +46,17 @@ final class Extension extends AbstractExtension
                 $this->highlight(...),
                 [
                     'is_safe' => ['html'],
+                    'needs_context' => true,
                 ],
             ),
         ];
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     private function highlight(
+        array $context,
         string $code,
         ?string $language,
         bool $showLineNumbers = false,
@@ -82,6 +87,7 @@ final class Extension extends AbstractExtension
                         'Language "%s" is not available to highlight code',
                         $this->language,
                     ),
+                    $context,
                 );
             }
 
