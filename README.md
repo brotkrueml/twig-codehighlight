@@ -10,6 +10,7 @@ used which does the hard work. You can use every
 An addition to the highlighting of code this Twig extension provides additional
 (opinionated) features:
 
+- [language aliases](#language-aliases)
 - [line numbers](#line-numbers)
 - [emphasize lines](#emphasize-lines)
 - [classes](#classes)
@@ -51,6 +52,16 @@ This will render something like this:
 <pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-string">"test"</span>; <span class="hljs-meta">?&gt;</span></code></pre>
 ```
 
+### Language aliases
+
+When you have already an existing application with languages named alternatively than highlight.php
+provides them, you can assign an array of language aliases when instantiating the extension class:
+
+```php
+$twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(languageAliases: ['text' => 'plaintext', 'sh' => 'shell']));
+```
+
+In this example, we introduce `text` as an alias for `plaintext` and `sh` for `shell`.
 
 
 ### Line numbers

@@ -31,8 +31,12 @@ final class Extension extends AbstractExtension
     private string $emphasizeLines;
     private string $classes;
 
+    /**
+     * @param array<string, string> $languageAliases
+     */
     public function __construct(
         private readonly ?LoggerInterface $logger = null,
+        private readonly array $languageAliases = [],
     ) {
         $this->highlighter = new Highlighter();
         $this->lineNumbersParser = new LineNumbersParser();
@@ -59,7 +63,7 @@ final class Extension extends AbstractExtension
         ?string $emphasizeLines = '',
         string $classes = '',
     ): string {
-        $this->language = $language ?? '';
+        $this->language = $this->languageAliases[$language] ?? $language ?? '';
         $this->showLineNumbers = $showLineNumbers;
         $this->startWithLineNumber = $startWithLineNumber;
         $this->emphasizeLines = $emphasizeLines ?? '';
