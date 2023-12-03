@@ -113,3 +113,17 @@ code [data-emphasize-line] {
     background: lightcyan;
 }
 ```
+
+### Classes
+
+You can add one or more additional classes to the `<pre>` tag:
+
+```twig
+{{ some text | codehighlight(language="plaintext", classes="someclass anotherclass") }}
+```
+
+Which results in the following HTML code:
+
+```html
+<pre class="someclass anotherclass"><code class="hljs plaintext">some text</code></pre>
+```
