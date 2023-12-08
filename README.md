@@ -116,14 +116,35 @@ code [data-emphasize-line] {
 
 ### Classes
 
-You can add one or more additional classes to the `<pre>` tag:
+There are two ways to set or more classes to the `<pre>` tag:
 
-```twig
-{{ some text | codehighlight(language="plaintext", classes="someclass anotherclass") }}
-```
+1.  To set the classes in an application use the `classes` constructor argument when instantiating the
+    Twig extension:
 
-Which results in the following HTML code:
+    ```php
+    $twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(classes: 'some-default-class'));
+    ```
+
+    Which results in the following HTML code:
+
+    ```html
+    <pre class="some-default-class">...</pre>
+    ```
+
+2. You can add one or more additional classes to the `<pre>` tag for a special code block:
+
+    ```twig
+    {{ some text | codehighlight(language="plaintext", classes="some-special-class another-special-class") }}
+    ```
+
+    Which results in the following HTML code:
+
+    ```html
+    <pre class="some-special-class another-special-class"><code class="hljs plaintext">some text</code></pre>
+    ```
+
+Using both variants together results in the following HTML code:
 
 ```html
-<pre class="someclass anotherclass"><code class="hljs plaintext">some text</code></pre>
+<pre class="some-default-class some-special-class another-special-class"><code class="hljs plaintext">some text</code></pre>
 ```
