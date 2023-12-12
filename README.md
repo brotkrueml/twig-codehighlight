@@ -10,6 +10,7 @@ used which does the hard work. You can use every
 An addition to the highlighting of code this Twig extension provides additional
 (opinionated) features:
 
+- [language aliases](#language-aliases)
 - [line numbers](#line-numbers)
 - [emphasize lines](#emphasize-lines)
 - [classes](#classes)
@@ -51,6 +52,16 @@ This will render something like this:
 <pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">echo</span> <span class="hljs-string">"test"</span>; <span class="hljs-meta">?&gt;</span></code></pre>
 ```
 
+### Language aliases
+
+When you have already an existing application with languages named alternatively than highlight.php
+provides them, you can assign an array of language aliases when instantiating the extension class:
+
+```php
+$twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(languageAliases: ['text' => 'plaintext', 'sh' => 'shell']));
+```
+
+In this example, we introduce `text` as an alias for `plaintext` and `sh` for `shell`.
 
 
 ### Line numbers
@@ -101,4 +112,39 @@ You can then use a custom CSS rule to highlight the line, for example:
 code [data-emphasize-line] {
     background: lightcyan;
 }
+```
+
+### Classes
+
+There are two ways to set or more classes to the `<pre>` tag:
+
+1.  To set the classes in an application use the `classes` constructor argument when instantiating the
+    Twig extension:
+
+    ```php
+    $twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(classes: 'some-default-class'));
+    ```
+
+    Which results in the following HTML code:
+
+    ```html
+    <pre class="some-default-class">...</pre>
+    ```
+
+2. You can add one or more additional classes to the `<pre>` tag for a special code block:
+
+    ```twig
+    {{ some text | codehighlight(language="plaintext", classes="some-special-class another-special-class") }}
+    ```
+
+    Which results in the following HTML code:
+
+    ```html
+    <pre class="some-special-class another-special-class"><code class="hljs plaintext">some text</code></pre>
+    ```
+
+Using both variants together results in the following HTML code:
+
+```html
+<pre class="some-default-class some-special-class another-special-class"><code class="hljs plaintext">some text</code></pre>
 ```

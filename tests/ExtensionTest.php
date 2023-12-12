@@ -234,4 +234,63 @@ EXPECTED,
         self::assertSame(LogLevel::WARNING, $logger->level);
         self::assertSame('Language "non_existing" is not available to highlight code', $logger->message);
     }
+
+    #[Test]
+    public function instantiatedWithLanguageAlias(): void
+    {
+        $subject = new Extension(languageAliases: [
+            'text' => 'plaintext',
+        ]);
+
+        $loader = new ArrayLoader([
+            'index' => '{{ "some text" | codehighlight("text") }}',
+        ]);
+        $twig = new Environment($loader, [
+            'debug' => true,
+            'cache' => false,
+        ]);
+        $twig->addExtension($subject);
+
+        $template = $twig->load('index');
+
+        self::assertSame('<pre><code class="hljs plaintext">some text</code></pre>', $template->render());
+    }
+
+    #[Test]
+    public function instantiatedWithClasses(): void
+    {
+        $subject = new Extension(classes: 'some-default-class');
+
+        $loader = new ArrayLoader([
+            'index' => '{{ "some text" | codehighlight("plaintext") }}',
+        ]);
+        $twig = new Environment($loader, [
+            'debug' => true,
+            'cache' => false,
+        ]);
+        $twig->addExtension($subject);
+
+        $template = $twig->load('index');
+
+        self::assertSame('<pre class="some-default-class"><code class="hljs plaintext">some text</code></pre>', $template->render());
+    }
+
+    #[Test]
+    public function instantiatedWithClassesAndClassesGivenViaFilter(): void
+    {
+        $subject = new Extension(classes: 'some-default-class');
+
+        $loader = new ArrayLoader([
+            'index' => '{{ "some text" | codehighlight("plaintext", classes="some-special-class") }}',
+        ]);
+        $twig = new Environment($loader, [
+            'debug' => true,
+            'cache' => false,
+        ]);
+        $twig->addExtension($subject);
+
+        $template = $twig->load('index');
+
+        self::assertSame('<pre class="some-default-class some-special-class"><code class="hljs plaintext">some text</code></pre>', $template->render());
+    }
 }
