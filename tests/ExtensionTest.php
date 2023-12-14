@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Brotkrueml\TwigCodeHighlight\Tests;
 
 use Brotkrueml\TwigCodeHighlight\Extension;
+use Highlight\Highlighter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -254,6 +255,31 @@ EXPECTED,
         $template = $twig->load('index');
 
         self::assertSame('<pre><code class="hljs plaintext">some text</code></pre>', $template->render());
+    }
+
+    #[Test]
+    public function instantiateWithOneAdditionalLanguage(): void
+    {
+        $tmpFile = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
+        new Extension(additionalLanguages: [['some_test_language', $tmpFile]]);
+
+        $actual = Highlighter::listRegisteredLanguages();
+
+        self::assertContains('some_test_language', $actual);
+    }
+
+    #[Test]
+    public function instantiateWithTwoAdditionalLanguage(): void
+    {
+        $tmpFile1 = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
+        $tmpFile2 = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
+        new Extension(additionalLanguages: [['some_test_language', $tmpFile1]]);
+        new Extension(additionalLanguages: [['another_test_language', $tmpFile2]]);
+
+        $actual = Highlighter::listRegisteredLanguages();
+
+        self::assertContains('some_test_language', $actual);
+        self::assertContains('another_test_language', $actual);
     }
 
     #[Test]
