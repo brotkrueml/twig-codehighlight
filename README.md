@@ -11,6 +11,7 @@ An addition to the highlighting of code this Twig extension provides additional
 (opinionated) features:
 
 - [language aliases](#language-aliases)
+- [additional languages](#additional-languages)
 - [line numbers](#line-numbers)
 - [emphasize lines](#emphasize-lines)
 - [classes](#classes)
@@ -62,6 +63,27 @@ $twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(languageAliases: 
 ```
 
 In this example, we introduce `text` as an alias for `plaintext` and `sh` for `shell`.
+
+
+### Additional languages
+
+Sometimes you have the need to add languages which are not shipped by the
+`scrivo/highlight.php` package. You can add one or more custom languages:
+
+```php
+$twig->addExtension(new Brotkrueml\TwigCodeHighlight\Extension(
+    additionalLanguages: [
+        ['custom_language', '/path/to/the/custom_language.json'],
+        ['another_language', '/path/to/the/another_language.json', true],
+    ]
+));
+```
+
+The array consists of the following values:
+
+- The language ID (here: `custom_language` and `another_language`) - required
+- The full path to the language (here: `/path/to/the/custom_language.json` and `/path/to/the/another_language.json`) - required
+- Should this language override a provided one (default: `false`, set to `true` if it should override) - optional
 
 
 ### Line numbers

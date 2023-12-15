@@ -14,6 +14,7 @@ namespace Brotkrueml\TwigCodeHighlight;
 use Brotkrueml\TwigCodeHighlight\Parser\LineNumbersParser;
 use Highlight\Highlighter;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -32,14 +33,20 @@ final class Extension extends AbstractExtension
 
     /**
      * @param array<string, string> $languageAliases
+     * @param list<array{0: string, 1: string, 2?: bool}> $additionalLanguages
      */
     public function __construct(
-        private readonly ?LoggerInterface $logger = null,
+        private readonly LoggerInterface $logger = new NullLogger(),
         private readonly array $languageAliases = [],
+        array $additionalLanguages = [],
         private string $classes = '',
     ) {
         $this->highlighter = new Highlighter();
         $this->lineNumbersParser = new LineNumbersParser();
+
+        foreach ($additionalLanguages as $language) {
+            $this->highlighter::registerLanguage($language[0], $language[1], $language[2] ?? false);
+        }
     }
 
     public function getFilters(): array
@@ -80,14 +87,12 @@ final class Extension extends AbstractExtension
             return $this->buildHtmlCode($highlightedCode->value, false, $codeClasses);
         } catch (\DomainException) {
             // This is thrown, if the specified language does not exist
-            if ($this->logger instanceof LoggerInterface) {
-                $this->logger->warning(
-                    \sprintf(
-                        'Language "%s" is not available to highlight code',
-                        $this->language,
-                    ),
-                );
-            }
+            $this->logger->warning(
+                \sprintf(
+                    'Language "%s" is not available to highlight code',
+                    $this->language,
+                ),
+            );
 
             return $this->buildHtmlCode($code);
         }
