@@ -7,8 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.1.0] - xxxx-xx-xx
+## [0.1.0] - 2024-01-28
 
-Initial release
+Initial preview release
 
-[0.1.0]: https://github.com/brotkrueml/code-highlight-twig-extension/releases/tag/v0.1.0
+[0.1.0]: https://github.com/brotkrueml/twig-codehighlight/releases/tag/v0.1.0
