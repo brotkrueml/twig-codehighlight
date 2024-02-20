@@ -16,7 +16,7 @@ An addition to the highlighting of code this Twig extension provides additional
 - [emphasize lines](#emphasize-lines)
 - [classes](#classes)
 
-> This package is currently under heavy development!
+> This package is in beta phase! You can use it already, but API might change.
 
 ## Usage
 
