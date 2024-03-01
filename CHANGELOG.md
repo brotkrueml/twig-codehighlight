@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] - 2024-03-01
+
 ### Added
 - Function to output registered languages
 
@@ -14,4 +16,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Initial preview release
 
+[Unreleased]: https://github.com/brotkrueml/twig-codehighlight/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/brotkrueml/twig-codehighlight/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/brotkrueml/twig-codehighlight/releases/tag/v0.1.0
