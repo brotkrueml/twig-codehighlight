@@ -15,6 +15,7 @@ An addition to the highlighting of code this Twig extension provides additional
 - [line numbers](#line-numbers)
 - [emphasize lines](#emphasize-lines)
 - [classes](#classes)
+- [list of available languages](#list-of-available-languages)
 
 > This package is in beta phase! You can use it already, but API might change.
 
@@ -170,3 +171,17 @@ Using both variants together results in the following HTML code:
 ```html
 <pre class="some-default-class some-special-class another-special-class"><code class="hljs plaintext">some text</code></pre>
 ```
+
+### List of available languages
+
+Sometimes it can be useful to provide a list of available languages. The function `codehighlight_languages()`
+is available to output such a list:
+
+```twig
+<ul>
+{% for language in codehighlight_languages() %}
+    <li>{{ language }}</li>
+{% endfor %}
+</ul>
+```
+

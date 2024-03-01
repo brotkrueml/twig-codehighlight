@@ -7,6 +7,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- Function to output registered languages
+
 ## [0.1.0] - 2024-01-28
 
 Initial preview release

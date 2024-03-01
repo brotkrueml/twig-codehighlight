@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @see \Brotkrueml\TwigCodeHighlight\Tests\ExtensionTest
@@ -49,6 +50,9 @@ final class Extension extends AbstractExtension
         }
     }
 
+    /**
+     * @return list<TwigFilter>
+     */
     public function getFilters(): array
     {
         return [
@@ -58,6 +62,19 @@ final class Extension extends AbstractExtension
                 [
                     'is_safe' => ['html'],
                 ],
+            ),
+        ];
+    }
+
+    /**
+     * @return list<TwigFunction>
+     */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction(
+                'codehighlight_languages',
+                $this->languages(...),
             ),
         ];
     }
@@ -159,5 +176,16 @@ final class Extension extends AbstractExtension
         }
 
         return \implode("\n", $newLines);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function languages(): array
+    {
+        $registeredLanguages = Highlighter::listRegisteredLanguages();
+        \sort($registeredLanguages);
+
+        return $registeredLanguages;
     }
 }

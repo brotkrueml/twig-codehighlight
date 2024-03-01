@@ -32,9 +32,15 @@ final class ExtensionTest extends TestCase
     }
 
     #[Test]
-    public function getNameReturnExtensionName(): void
+    public function registeredFiltersAreAvailable(): void
     {
         self::assertSame('codehighlight', $this->subject->getFilters()[0]->getName());
+    }
+
+    #[Test]
+    public function registeredFunctionsAreAvailable(): void
+    {
+        self::assertSame('codehighlight_languages', $this->subject->getFunctions()[0]->getName());
     }
 
     #[Test]
@@ -321,5 +327,34 @@ EXPECTED,
         $template = $twig->load('index');
 
         self::assertSame('<pre class="some-default-class some-special-class"><code class="hljs plaintext">some text</code></pre>', $template->render());
+    }
+
+    #[Test]
+    public function registeredLanguagesAreReturnedCorrectly(): void
+    {
+        $loader = new ArrayLoader([
+            'index' => <<<TEMPLATE
+{% for language in codehighlight_languages() %}
+{{ language }}
+{% endfor %}
+TEMPLATE,
+        ]);
+        $twig = new Environment($loader, [
+            'debug' => true,
+            'cache' => false,
+        ]);
+        $twig->addExtension($this->subject);
+
+        $template = $twig->load('index');
+
+        $actual = $template->render();
+        $actualAsArray = \explode("\n", $actual);
+
+        // Validate sorting
+        self::assertStringStartsWith('1c', $actualAsArray[0]);
+        self::assertStringEndsWith('zephir', $actualAsArray[\count($actualAsArray) - 2]);
+
+        // Validate random language is available
+        self::assertContains('php', $actualAsArray);
     }
 }
