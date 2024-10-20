@@ -39,10 +39,10 @@ jobs:
           composer update --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHP linter
         run: |
-          find . -type f -name '*.php' ! -path "./vendor/*" -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+          make lint-php
       - name: Run tests
         run: |
-          make tests
+          make tests-php-unit
   code-quality:
     name: Code Quality
     runs-on: ubuntu-latest
@@ -77,16 +77,16 @@ jobs:
       - name: Check coding standards
         if: always()
         run: |
-          vendor/bin/ecs check --no-progress-bar
+          make cs-php-check
       - name: Run mutation tests
         if: always()
         run: |
-            make infection
-      - name: Run phpstan
+            make tests-php-mutation
+      - name: Run static analysis
         if: always()
         run: |
-          make phpstan
+          make stan
       - name: Run rector
         if: always()
         run: |
-          make rector-dry
+          make rector-check
