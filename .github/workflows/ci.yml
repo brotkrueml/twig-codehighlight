@@ -39,7 +39,7 @@ jobs:
           composer update --no-progress --prefer-dist --optimize-autoloader
       - name: Run PHP linter
         run: |
-          find . -type f -name '*.php' ! -path "./.Build/*" -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+          find . -type f -name '*.php' ! -path "./vendor/*" -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
       - name: Run tests
         run: |
           make tests
