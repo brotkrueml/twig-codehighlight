@@ -267,7 +267,6 @@ EXPECTED,
     public function instantiateWithOneAdditionalLanguage(): void
     {
         $tmpFile = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
-        // @phpstan-ignore-next-line Parameter $additionalLanguages of class Brotkrueml\TwigCodeHighlight\Extension constructor expects array<int, array{0: string, 1: string, 2?: bool}>,array{array{'some_test_language', string|false}} given.
         new Extension(additionalLanguages: [['some_test_language', $tmpFile]]);
 
         $actual = Highlighter::listRegisteredLanguages();
@@ -280,9 +279,7 @@ EXPECTED,
     {
         $tmpFile1 = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
         $tmpFile2 = \tempnam(\sys_get_temp_dir(), 'twig_codehighlight_test_');
-        // @phpstan-ignore-next-line Parameter $additionalLanguages of class Brotkrueml\TwigCodeHighlight\Extension constructor expects array<int, array{0: string, 1: string, 2?: bool}>,array{array{'some_test_language', string|false}} given.
         new Extension(additionalLanguages: [['some_test_language', $tmpFile1]]);
-        // @phpstan-ignore-next-line Parameter $additionalLanguages of class Brotkrueml\TwigCodeHighlight\Extension constructor expects array<int, array{0: string, 1: string, 2?: bool}>,array{array{'some_test_language', string|false}} given.
         new Extension(additionalLanguages: [['another_test_language', $tmpFile2]]);
 
         $actual = Highlighter::listRegisteredLanguages();
