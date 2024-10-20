@@ -18,7 +18,7 @@
 		"twig/twig": "^3.7"
 	},
 	"require-dev": {
-		"brotkrueml/coding-standards": "~5.1.0",
+		"brotkrueml/coding-standards": "~6.1.0",
 		"ergebnis/composer-normalize": "~2.42.0",
 		"infection/infection": "^0.27.10",
 		"phpstan/phpstan": "1.10.59",

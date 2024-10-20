@@ -210,7 +210,7 @@ EXPECTED,
     #[Test]
     public function warningIsLoggedIfLanguageIsNotAvailable(): void
     {
-        $logger = new class() implements LoggerInterface {
+        $logger = new class implements LoggerInterface {
             use LoggerTrait;
 
             public string $level = '';

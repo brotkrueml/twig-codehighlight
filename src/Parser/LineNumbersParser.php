@@ -33,7 +33,7 @@ final class LineNumbersParser
         $separatedNumbers = [];
         foreach ($numbersArray as $numberWithPossibleRange) {
             if (\is_numeric($numberWithPossibleRange)) {
-                $separatedNumbers[] = (int)$numberWithPossibleRange;
+                $separatedNumbers[] = (int) $numberWithPossibleRange;
                 continue;
             }
             if (! \str_contains($numberWithPossibleRange, '-')) {
@@ -47,7 +47,7 @@ final class LineNumbersParser
             if (! \is_numeric($high)) {
                 continue;
             }
-            $separatedNumbers = [...$separatedNumbers, ...\range((int)$low, (int)$high)];
+            $separatedNumbers = [...$separatedNumbers, ...\range((int) $low, (int) $high)];
         }
 
         \sort($separatedNumbers);
