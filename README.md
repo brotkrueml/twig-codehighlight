@@ -1,6 +1,6 @@
 # Twig extension for code highlighting
 
-[![CI Status](https://github.com/brotkrueml/schema/workflows/CI/badge.svg?branch=main)](https://github.com/brotkrueml/schema/actions?query=workflow%3ACI)
+[![CI](https://github.com/brotkrueml/twig-codehighlight/actions/workflows/ci.yml/badge.svg)](https://github.com/brotkrueml/twig-codehighlight/actions/workflows/ci.yml)
 
 This package provides a Twig extension for server-side code highlighting. Under the
 hood, the [scrivo/highlight.php](https://github.com/scrivo/highlight.php) package is
