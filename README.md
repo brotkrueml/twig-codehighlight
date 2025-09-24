@@ -17,8 +17,6 @@ An addition to the highlighting of code this Twig extension provides additional
 - [classes](#classes)
 - [list of available languages](#list-of-available-languages)
 
-> This package is in beta phase! You can use it already, but API might change.
-
 ## Usage
 
 Add the extension to the Twig environment:
